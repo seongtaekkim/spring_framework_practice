@@ -11,8 +11,12 @@ import ch1_1_1.domain.User;
 public class UserDao {
 
 	public void add(User user) throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection c = DriverManager.getConnection("jdbc:mysql://localhost/board","root","1234");
+		//Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("org.mariadb.jdbc.Driver");
+//		Connection c = DriverManager.getConnection("jdbc:mysql://localhost/board","root","1234");
+		Connection c = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/mysql",
+                    "root",
+                    "1234");
 		  
 		PreparedStatement ps = c.prepareStatement("insert into users(id,name,password) values(?,?,?)");
 		ps.setString(1, user.getId());
@@ -26,8 +30,10 @@ public class UserDao {
 	}
 	
 	public User get(String id) throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection c = DriverManager.getConnection("jdbc:mysql://localhost/board","root","1234");
+		Class.forName("org.mariadb.jdbc.Driver");
+		Connection c = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/mysql",
+                "root",
+                "1234");
 		
 		PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
 		ps.setString(1, id);
