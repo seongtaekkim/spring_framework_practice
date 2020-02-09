@@ -5,14 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import ch1_1_3_3.domain.User;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+import ch1_1_3_3.domain.User;
 public class UserDao {
 	private ConnectionMaker connectionMaker;
 	
 	public UserDao(ConnectionMaker connectionMaker) {
 		this.connectionMaker = connectionMaker;
 	}
+	
 	public void add(User user) throws ClassNotFoundException, SQLException {
 		 
 		Connection c = connectionMaker.makeConnection();

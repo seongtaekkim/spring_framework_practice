@@ -20,7 +20,7 @@ public class CountingDaoFactory {
 	
 	@Bean
 	public ConnectionMaker connectionMaker() {
-		return new CountingConnectionMaker(realConnectionMaker());
+		return (ConnectionMaker) new CountingConnectionMaker(realConnectionMaker());
 	}
 	@Bean
 	public ConnectionMaker realConnectionMaker() {
