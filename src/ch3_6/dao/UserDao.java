@@ -1,94 +1,67 @@
 package ch3_6.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 
 import ch3_3.domain.User;
 
 
 public class UserDao {
 	private JdbcContext jdbcContext;
-	@SuppressWarnings("unused")
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
 
-	// UserDao -> JdbcContext -> DataSource 순서로 의존관계 형성
-	/*	public void setDataSource(JdbcContext jdbcContext) {
-		this.jdbcContext = jdbcContext;
-	}*/
-
-	// UserDao -> Datasource 
-	// JdbcContext -> UserDao 순서로 의존관계 형성
-	// UserDao에 주입된 dataSource를 jdbcContext에 주입한다.
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
 	public void add(final User user) throws SQLException {
-		this.jdbcContext.workWithStatament(
-				new StatementStrategy() {			
-					public PreparedStatement makePreparedStatement(Connection c)
-							throws SQLException {
-						PreparedStatement ps = 
-								c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
-						ps.setString(1, user.getId());
-						ps.setString(2, user.getName());
-						ps.setString(3, user.getPassword());
+		this.jdbcTemplate.update("insert into users(id, name, password) values(?,?,?)"
+				,user.getId(),user.getName(),user.getPassword());
+	}
 
-						return ps;
+
+	public User get(String id) throws SQLException {
+		return this.jdbcTemplate.queryForObject("select * from users where id =?"
+				, new Object[] {id},
+				new RowMapper<User>() {
+					public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+						User user = new User();
+						user.setId(rs.getString("id"));
+						user.setName(rs.getString("name"));
+						user.setPassword(rs.getString("password"));
+						return user;
 					}
-				}
-				);
+				});
 	}
 
-
-	/*	public User get(String id) throws SQLException {
-		Connection c = this.dataSource.getConnection();
-		PreparedStatement ps = c
-				.prepareStatement("select * from users where id = ?");
-		ps.setString(1, id);
-
-		ResultSet rs = ps.executeQuery();
-
-		User user = null;
-		if (rs.next()) {
-			user = new User();
-			user.setId(rs.getString("id"));
-			user.setName(rs.getString("name"));
-			user.setPassword(rs.getString("password"));
-		}
-
-		rs.close();
-		ps.close();
-		c.close();
-
-		if (user == null) throw new EmptyResultDataAccessException(1);
-
-		return user;
-	}
-	 */
 	public void deleteAll() throws SQLException {
-		this.jdbcContext.excuteSql("delete from users");
+		this.jdbcTemplate.update("delete from users");
 	}
 
 
-	/*public int getCount() throws SQLException  {
-		Connection c = dataSource.getConnection();
+	public int getCount() throws SQLException  {
+		//return this.jdbcTemplate.queryForInt("select count(*) from user");
+		return this.jdbcTemplate.query(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 
-		PreparedStatement ps = c.prepareStatement("select count(*) from users");
-
-		ResultSet rs = ps.executeQuery();
-		rs.next();
-		int count = rs.getInt(1);
-
-		rs.close();
-		ps.close();
-		c.close();
-
-		return count;
-	}*/
+				return con.prepareStatement("select count(*) from user");
+			}
+		}, new ResultSetExtractor<Integer>() {
+			public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+				rs.next();
+				return rs.getInt(1);
+			}
+		});
+	}
 }
