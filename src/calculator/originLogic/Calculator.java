@@ -5,7 +5,13 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Calculator {
-
+	
+	/*
+	 * 1. buffer 에 파일을 담는다.
+	 * 2. 한줄 씩 읽으며 숫자를 더한다
+	 * 3. 예외처리 소스를 추가한다.
+	 * 4. 로직 종료 후 자원을 종료한다.
+	 */
 	public Integer sumCal(String filepath) throws IOException {
 		BufferedReader br = null;
 		try {
