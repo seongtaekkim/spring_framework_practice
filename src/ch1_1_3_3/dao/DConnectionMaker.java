@@ -12,6 +12,4 @@ public class DConnectionMaker implements ConnectionMaker {
 		Connection c = DriverManager.getConnection("jdbc:mysql://localhost/board","root","1234");
 		return c;
 	}
-
-
 }

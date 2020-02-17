@@ -83,7 +83,6 @@ public class Calculator {
 
 	}
 
-
 	public <T> T lineReadTemplate(String filepath, LineCallback<T> callback, T initVal) throws IOException {
 		BufferedReader br = null;
 		try {
@@ -138,13 +137,4 @@ public class Calculator {
 				};
 		return lineReadTemplate(filepath, multiplyCallback, 1);
 	}
-	
-	
-
-
-
-
-
-
-
 }

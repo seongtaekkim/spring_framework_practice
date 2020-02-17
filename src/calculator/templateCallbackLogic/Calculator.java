@@ -39,4 +39,5 @@ public class Calculator {
 		};
 		return lineReadTemplate(filepath, concatenateCallback, " : ");		
 	}
+	
 }

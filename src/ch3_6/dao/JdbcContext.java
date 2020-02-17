@@ -14,10 +14,8 @@ public class JdbcContext {
 	}
 
 	public void workWithStatament(StatementStrategy stmt) throws SQLException {
-
 		Connection c= null;
 		PreparedStatement ps = null;
-
 		try {
 			c = this.dataSource.getConnection();
 			ps = stmt.makePreparedStatement(c);
@@ -33,12 +31,12 @@ public class JdbcContext {
 
 	public void excuteSql(final String query) throws SQLException {
 		workWithStatament(
-				new StatementStrategy() {
-					public PreparedStatement makePreparedStatement(Connection c)
-							throws SQLException {
-						return c.prepareStatement(query);
-					}
+			new StatementStrategy() {
+				public PreparedStatement makePreparedStatement(Connection c)
+						throws SQLException {
+					return c.prepareStatement(query);
 				}
-				);
+			}
+		);
 	}
 }
