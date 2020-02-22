@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	Hello world!  222
 </h1>
 
 <input type="text" id="num1" name="num1"/>
@@ -22,9 +22,10 @@
 <script>
 	$(document).ready(function() {
 		  $('#operate').click(function() {
+			 
 	            $.ajax({
 	                type: "GET",
-	                url: "/calculator",
+	                url: "./calculator",
 	                data: {    "num1" : $('#num1').val(),
 	                    "num2" : $('#num2').val()},
 	                success: function() {
