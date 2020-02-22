@@ -11,27 +11,32 @@
 	Hello world!  
 </h1>
 
-<input type="text" id="num1" name="num1"/>
-<input type="text" id="operator" name="operator" width="10px"/>
-<input type="text" id="num2" name="num2"/>
-=
-<input type="text" id="result" name="result" />
-
-<input type="button" id="operate" value="operate" />
-
+<form id="calc_form" name="calc_form">
+	<input type="text" id="num1" name="num1"/>
+	<input type="text" id="operator" name="operator" width="10px"/>
+	<input type="text" id="num2" name="num2"/>
+	=
+	<input type="text" id="result" name="result" />
+	
+	<input type="button" id="operate" value="operate" />
+</form>
 <script>
 	$(document).ready(function() {
 		  $('#operate').click(function() {
+			  var sendData = $("#calc_form").serialize();
+			  //console.log("sendData : " + sendData);
 	            $.ajax({
 	                type: "GET",
 	                url: "/calculator",
-	                data: {    "num1" : $('#num1').val(),
-	                    "num2" : $('#num2').val()},
-	                success: function() {
-	                    alert('로그인 성공');
-	                    location.reload();
-	                }, error: function() {
-	                    alert('로그인 정보가 올바르지 않습니다.');
+	                data: sendData,
+	                dataType: "json",
+	                contentType: "application/json;charset=UTF-8",
+	                success: function(data, status, xhr) {
+	                    //console.log(data.res);
+	                    $("#result").val(data.res);
+	                },
+	                error: function(jqXHR, textStatus, errorThrown) {
+	                    alert(jqXHR.responseText);
 	                }
 	            });
 	        });

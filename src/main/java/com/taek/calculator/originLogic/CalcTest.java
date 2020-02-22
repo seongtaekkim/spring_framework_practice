@@ -5,7 +5,7 @@ import java.io.IOException;
 
 
 public class CalcTest {
-	private Calculator calculator;
+	private CalculatorOrigin calculator;
 	private String numFilepath;
 	
 /*	@
