@@ -34,7 +34,7 @@ public class CalculatorOrigin {
 		}
 	}
 	
-	public Integer sumCal(String a, String b, String operator) {
+	public Integer sumCal(String a, String b, String operator)throws Exception  {
 		Integer sum = 0;
 		try {
 			sum = Integer.valueOf(a) + Integer.valueOf(b);
@@ -45,7 +45,7 @@ public class CalculatorOrigin {
 		}
 	}
 	
-	public Integer multiCal(String a, String b, String operator) {
+	public Integer multiCal(String a, String b, String operator)throws Exception  {
 		Integer multi = 0;
 		try {
 			multi = Integer.valueOf(a) * Integer.valueOf(b);
@@ -56,7 +56,7 @@ public class CalculatorOrigin {
 		}
 	}
 	
-	public Integer subCal(String a, String b, String operator) {
+	public Integer subCal(String a, String b, String operator)throws Exception  {
 		Integer sub = 0;
 		try {
 			sub = Integer.valueOf(a) - Integer.valueOf(b);
