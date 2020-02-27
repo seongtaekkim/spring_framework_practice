@@ -21,6 +21,9 @@ import com.taek.vo.CalcVo;
 @Controller
 public class HomeController {
 	
+	@Autowired
+	DataSource dataSource;
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/calculator", method = RequestMethod.GET)
@@ -40,9 +43,6 @@ public class HomeController {
 		map.put("res", resCalculate);
 		return map;
 	}
-	
-	@Autowired
-	DataSource dataSource;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
