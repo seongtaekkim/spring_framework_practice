@@ -14,18 +14,46 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.taek.vo.User;
 
+import dao.JdbcContext;
+import dao.StatementStrategy;
+
 
 public class UserDao {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
-
+	private JdbcContext jdbcContext;
+	/*	public void setDataSource(DataSource dataSource) {
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	}*/
 	public void setDataSource(DataSource dataSource) {
+		this.jdbcContext = new JdbcContext();
+		this.jdbcContext.setDataSource(dataSource);
+		this.dataSource = dataSource;
+		
+		
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
 	public void add(final User user) throws SQLException {
-		this.jdbcTemplate.update("insert into users(id, name, password) values(?,?,?)"
-				,user.getId(),user.getName(),user.getPassword());
+		
+		// JdbcTemplate class를 이용한 방식
+		/*this.jdbcTemplate.update("insert into users(id, name, password) values(?,?,?)"
+				,user.getId(),user.getName(),user.getPassword());*/
+		
+		// JdbcContext class를 이용한 방식
+		this.jdbcContext.workWithStatament(
+			new StatementStrategy() {
+				@Override
+				public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+					PreparedStatement ps = 
+							c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
+					ps.setString(1, user.getId());
+					ps.setString(2, user.getName());
+					ps.setString(3, user.getPassword());
+
+					return ps;
+				}
+		});
 	}
 
 

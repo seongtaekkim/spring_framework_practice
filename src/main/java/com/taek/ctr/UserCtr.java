@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +25,7 @@ public class UserCtr {
 	DataSource dataSource;
 	
 	@RequestMapping(value="/retrieveUser", method=RequestMethod.GET)
-	public String registUser(User user) throws SQLException {
+	public String retrieveUser(User user) throws SQLException {
 		
 		UserDao userDao = new UserDao();
 		userDao.setDataSource(dataSource);
@@ -32,17 +33,26 @@ public class UserCtr {
 		
 		userDao.add(user);
 		
-		return "/retrieveUser";
+		return "/user/retrieveUser";
 	}
 	
-	@RequestMapping(value="/registUser", method=RequestMethod.GET)
-	public @ResponseBody Map<String, Object> retrieveUser(User user) throws SQLException {
+	@RequestMapping(value="/initUser", method=RequestMethod.GET)
+	public String initUser() throws SQLException {
+		
+		return "/user/registUser";
+	}
+	
+	
+	@RequestMapping(value="/registUser", method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object> registUser(@RequestBody User user) throws SQLException {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 
+		// client 에서 context생성 및 datasource를 DI 한다.
 		UserDao userDao = new UserDao();
 		userDao.setDataSource(dataSource);
 		
+		// client에서 context의 전략메서드를 사용한다.
 		userDao.add(user);
 		
 		User resUser = userDao.get(user.getId());
