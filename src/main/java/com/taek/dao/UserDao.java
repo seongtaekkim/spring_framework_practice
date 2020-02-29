@@ -39,7 +39,7 @@ public class UserDao {
 		// JdbcTemplate class를 이용한 방식
 		/*this.jdbcTemplate.update("insert into users(id, name, password) values(?,?,?)"
 				,user.getId(),user.getName(),user.getPassword());*/
-		
+		 
 		// JdbcContext class를 이용한 방식
 		this.jdbcContext.workWithStatament(
 			new StatementStrategy() {
