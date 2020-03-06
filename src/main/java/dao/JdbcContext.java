@@ -104,4 +104,20 @@ public class JdbcContext {
 		}
 		return null;
 	}
+	
+	// sqlexception 없애야함 !
+	public void execute(final String sql) throws DataAccessException, SQLException {
+		class ExecuteStatementCallback implements StatementCallback<Object>, SqlProvider {
+			@Override
+			public Object doInStatement(Statement stmt) throws SQLException {
+				stmt.execute(sql);
+				return null;
+			}
+			@Override
+			public String getSql() {
+				return sql;
+			}
+		}
+		execute(new ExecuteStatementCallback());
+	}
 }

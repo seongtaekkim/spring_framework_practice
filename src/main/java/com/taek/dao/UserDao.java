@@ -74,6 +74,8 @@ public class UserDao {
 	public void deleteAll() throws SQLException {
 		this.jdbcTemplate.update("delete from users");
 	}
+	
+	
 
 
 	public int getCount() throws SQLException  {
