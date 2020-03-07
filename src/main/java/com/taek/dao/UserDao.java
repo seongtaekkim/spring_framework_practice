@@ -93,4 +93,12 @@ public class UserDao {
 			}
 		});
 	}
+	
+	public void update(User user) {
+		this.jdbcTemplate.update(
+				"update users st name=?, password=?, level=?, login=?, recommend=?, "+
+				" where id=?",user.getName(),user.getPassword(),user.getLevel(),user.getLogin()
+				, user.getRecommend(),user.getId()
+				);
+	}
 }
