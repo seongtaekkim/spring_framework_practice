@@ -3,7 +3,7 @@ package ch1_1_7.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class CountingConnectionMaker {
+public class CountingConnectionMaker implements ConnectionMaker {
 
 	int counter = 0;
 	private ConnectionMaker realConnectionMaker;

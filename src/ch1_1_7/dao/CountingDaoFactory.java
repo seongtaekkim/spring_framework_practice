@@ -10,14 +10,6 @@ public class CountingDaoFactory {
 		return new UserDao(connectionMaker());
 	}
 	
-	/*public AccountDao accountDao() {
-		return new AccountDao(connectionMaker());
-	}
-	
-	public MessageDao accountDao() {
-		return new MessageDao(connectionMaker());
-	}*/
-	
 	@Bean
 	public ConnectionMaker connectionMaker() {
 		return (ConnectionMaker) new CountingConnectionMaker(realConnectionMaker());

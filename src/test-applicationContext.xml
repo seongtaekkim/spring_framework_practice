@@ -11,12 +11,12 @@
 		<property name="password" value="1234" />
 	</bean>
 	
-	<bean id="userDao" class="ch3_6.dao.UserDao">
+	<bean id="userDao" class="com.taek.dao.UserDao">
 		<property name="dataSource" ref="dataSource" />
 		<property name="jdbcContext" ref="jdbcContext" />
 	</bean>
 	
-	<bean id="jdbcContext" class="ch3_6.dao.JdbcContext">
+	<bean id="jdbcContext" class="dao.JdbcContext">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 </beans>

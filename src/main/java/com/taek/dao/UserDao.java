@@ -22,17 +22,17 @@ public class UserDao {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
 	private JdbcContext jdbcContext;
-	/*	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-	}*/
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcContext = new JdbcContext();
-		this.jdbcContext.setDataSource(dataSource);
-		this.dataSource = dataSource;
-		
-		
+		public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
+//	public void setDataSource(DataSource dataSource) {
+//		this.jdbcContext = new JdbcContext();
+//		this.jdbcContext.setDataSource(dataSource);
+//		this.dataSource = dataSource;
+//		
+//		
+//		this.jdbcTemplate = new JdbcTemplate(dataSource);
+//	}
 
 	public void add(final User user) throws SQLException {
 		

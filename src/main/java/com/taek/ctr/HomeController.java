@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.taek.calculator.originLogic.CalculatorOrigin;
 import com.taek.vo.CalcVo;
 
+import dao.JdbcContext;
+
 @Controller
 public class HomeController {
 	
-	@Autowired
-	DataSource dataSource;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -47,7 +48,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.error("Welcome home! The client locale is {}.", locale);
-		System.out.println("dataSource : " + dataSource);
+	//	System.out.println("dataSource : " + dataSource);
 		return "home";
 	}
 	
